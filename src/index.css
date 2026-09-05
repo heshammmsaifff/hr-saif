@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ==========================================
+   CSS PRINT STYLES (Arabic PDF/Print fixes)
+   ========================================== */
+@media print {
+  /* 1. Reset color themes and dark backgrounds to clean black on white */
+  html, body, #root, .dark, .dark *, main, div, section, table, tr, th, td, p, span, h1, h2, h3, h4 {
+    background-color: white !important;
+    background-image: none !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    border-color: #cbd5e1 !important; /* light slate gray border */
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* 2. Enforce absolute RTL layout and aligned text direction */
+  body {
+    direction: rtl !important;
+    text-align: right !important;
+    /* Clean Segoe UI & Tahoma fonts ensure connected Arabic lettering in Chromium/Firefox PDF exports */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* 3. Re-orient tables to standard printing layout */
+  table {
+    border-collapse: collapse !important;
+    width: 100% !important;
+    direction: rtl !important;
+    margin-top: 15px !important;
+  }
+
+  th, td {
+    border: 1px solid #cbd5e1 !important;
+    padding: 8px 12px !important;
+    color: black !important;
+    background: transparent !important;
+    text-align: right !important;
+  }
+
+  th {
+    font-weight: bold !important;
+    background-color: #f1f5f9 !important; /* light grey fill for headings */
+  }
+
+  /* 4. Utility rules for printing layout controls */
+  .print-hidden, [class*="print:hidden"] {
+    display: none !important;
+  }
+
+  .print-block, [class*="print:block"] {
+    display: block !important;
+  }
+
+  /* Ensure page breaks are handled nicely */
+  tr {
+    page-break-inside: avoid !important;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 15mm 10mm 15mm 10mm;
+  }
+}
